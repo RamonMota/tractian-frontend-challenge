@@ -1,0 +1,29 @@
+.content-breadcrumb {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-gray600);
+    
+    b {
+        color: var(--color-dark);
+        font-size: 20px !important;
+    }
+}
+
+.content-column {
+    border: 1px solid var(--color-gray-border);
+    border-radius: 2px;
+    width: 100%;
+
+    &.left-column {
+        width: 100%;
+        min-width: 240px;
+        max-width: 479px;
+    }
+    &.right-column {
+        width: 100%;
+        min-width: 600px;
+    }
+}
+.height-in {
+    height: inherit;
+}
