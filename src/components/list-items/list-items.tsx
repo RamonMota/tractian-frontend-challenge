@@ -12,34 +12,49 @@ import ellipseRedIcon from '../../assets/ellipseRed.svg'
 import './list-items.scss'
 import { mergeLocationAssets, refactorAsset, refactorLocations } from '../../services/treeViewBuild';
 import { Search } from '../search/search';
-import { searchInHierarchy } from '../../utils/searchIn-hierarchy';
+import { searchInHierarchy } from '../../utils/search-in-hierarchy';
 import { useCompany } from '../../context/companyContext';
+import { filterEnergySensors } from '../../utils/filter-energy-sensors';
+import { useFilterAssetContext } from '../../context/FilterAssetContext';
 
 interface IOpenCollapseItems {
     [key: string]: boolean;
 }
 
 export const ListItems = () => {
+
     const { company } = useCompany();
+    const { filter, setFilter } = useFilterAssetContext();
+    const sortedRenderResults = (list: Asset[]) => list.sort((a, b) => (b.children?.length || 0) - (a.children?.length || 0));
     const [locations, setLocations] = useState<CompanyLocation[]>([]);
     const [asset, setAsset] = useState<Asset[]>([]);
     const [loading, setLoading] = useState(false);
     const [resultSearch, setResultSearch] = useState<Asset[]>([]);
-
     const refactoredLocations = refactorLocations(locations);
     const refactoredAsset = refactorAsset(asset);
     const combinedArray = [...refactoredLocations, ...refactoredAsset]
     const assetWithLocation = mergeLocationAssets(combinedArray);
+    const assetsEnegySensors = filterEnergySensors(combinedArray);
     const [openItems, setOpenItems] = useState<IOpenCollapseItems>({});
     const [search, setSearch] = useState<string>()
+
+    useEffect(() => {
+        if (filter === '') {
+            setOpenItems({});
+        } else if (filter === 'energy') {
+            const filtered = filterEnergySensors(assetWithLocation);
+            handleOpenItensSearch(filtered)
+            setResultSearch(filtered);
+        }
+    }, [filter, company]);
 
     useEffect(() => {
         if (search === '') {
             setOpenItems({});
         } else if (search) {
-
             const filtered = searchInHierarchy(assetWithLocation, search);
-
+            
+            setFilter('')
             handleOpenItensSearch(filtered)
             setResultSearch(filtered);
         }
@@ -136,17 +151,18 @@ export const ListItems = () => {
     const renderResults = () => {
         if (loading) return [...Array(15)].map((_, i) => <div className='skelleton-list' key={i} />);
 
+        if (filter === 'energy' && assetsEnegySensors) {
+            return sortedRenderResults(assetsEnegySensors).map(renderListItems)
+        }
+
         if (search) {
             return resultSearch.length > 0
-                ? sortedLocations(resultSearch).map(renderListItems)
+                ? sortedRenderResults(resultSearch).map(renderListItems)
                 : <p>Nenhum resultado encontrado</p>;
         }
 
-        return sortedLocations(assetWithLocation).map(renderListItems);
+        return sortedRenderResults(assetWithLocation).map(renderListItems);
     };
-
-    const sortedLocations = (list: Asset[]) =>
-        list.sort((a, b) => (b.children?.length || 0) - (a.children?.length || 0));
 
     return (
         <>

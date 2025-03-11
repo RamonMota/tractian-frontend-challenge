@@ -4,10 +4,12 @@ import './header.scss'
 import { useEffect, useState } from 'react';
 import { getCompanies, ICompany } from '../../services/companyService';
 import { useCompany } from '../../context/companyContext';
+import { useFilterAssetContext } from '../../context/FilterAssetContext';
 
 export const Header = () => {
     const [companyList, setCompanyList] = useState<ICompany[]>([])
     const { company, setCompany } = useCompany();
+    const { setFilter } = useFilterAssetContext();
 
 
     useEffect(() => {
@@ -19,8 +21,10 @@ export const Header = () => {
         fetchCompanies();
     }, []);
 
-    /* eslint-disable no-console */
-     console.log('company', company);
+    const handleChangeCompane = (comp: ICompany) => {
+        setCompany(comp)
+        setFilter('')
+    }
 
     return (
         <header className="content-header">
@@ -30,14 +34,14 @@ export const Header = () => {
                     companyList.map((comp, i) => (
                         <button
                             key={comp.id}
-                            onClick={() => setCompany(comp)}
-                            className={`btn-header ${comp.id === company?.id ? 'selected' : '' }`}>
+                            onClick={() => handleChangeCompane(comp)}
+                            className={`btn-header ${comp.id === company?.id ? 'selected' : ''}`}>
                             <img src={gold} alt="icon" />
                             {comp.name} Unit
                         </button>
                     ))
                     :
-                    <p>Carregando</p>
+                    [...Array(3)].map((_, i) => <div className='skelleton-button' key={i} />)
                 }
             </div>
         </header>

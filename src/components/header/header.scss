@@ -25,4 +25,13 @@
             background: var(--color-blue);
         }
     }
+
+    .skelleton-button {
+        height: 24px;
+        width: 100px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--color-blue800) 25%, #386ea7 50%, var(--color-blue800) 75%);
+        background-size: 200% 100%;
+        animation: loadingSkeleton 2s infinite ease-in-out;
+    }
 }

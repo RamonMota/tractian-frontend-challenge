@@ -177,11 +177,31 @@ body {
   border: 1px solid var(--color-gray-border);
   gap: 6px;
   border-radius: 3px;
+  cursor: pointer;
   color: var(--color-gray600);
 
-  img {
+  svg {
     height: 16px;
+
+    path {
+      fill: var(--color-blue)
+    }
   }
+
+  &.selected,
+  &:hover {
+    border-color: var(--color-blue);
+    background: var(--color-blue) !important;
+    color: var(--color-white);
+
+    svg {
+
+      path {
+        fill: var(--color-white)
+      }
+    }
+  }
+
 }
 
 .content-page {
