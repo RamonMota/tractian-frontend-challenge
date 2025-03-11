@@ -1,30 +1,31 @@
 import { api } from "./api";
 
-export type Company = {
-  id: number;
+export interface ICompany {
+  id: string;
   name: string;
 };
 
-export type CompanyLocation = {
+export interface CompanyLocation {
   id: string;
   name: string;
   parentId: number | string;
   children?: CompanyLocation[];
 };
 
-export type Asset = {
-  id?: string;
-  name?: string;
+export interface Asset {
+  id?: string | null;
+  name?: string | null;
   parentId?: string | null;
   sensorId?: string | null;
   sensorType?: string | null;
   status?: string | null;
   gatewayId?: string;
   locationId?: string;
-  children?: Asset[]
+  children?: Asset[] | null
 };
 
-export const getCompanies = async (): Promise<Company[]> => {
+
+export const getCompanies = async (): Promise<ICompany[]> => {
   const response = await api.get("/companies");
   return response.data;
 };

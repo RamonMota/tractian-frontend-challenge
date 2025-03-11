@@ -5,14 +5,19 @@ import IconI from '../../assets/Icon-i.svg'
 import './default.scss'
 import { ListItems } from '../../components/list-items/list-items'
 import { Product } from '../../components/product/product'
+import { useCompany } from '../../context/companyContext'
 
 export const Default = () => {
+
+  const { company } = useCompany();
+
+
   return (
     <div className='content-page'>
       <Header />
       <div className='content-center'>
         <div className='d-flex align-items-center justify-content-between'>
-          <h2 className='content-breadcrumb'><b>Ativos</b> / Apex Unit</h2>
+          <h2 className='content-breadcrumb'><b>Ativos</b> / {company?.name} Unit</h2>
           <div className='d-flex align-items-center gap-xs'>
             <button className='btn-outline'>
               <img src={IconBolt} alt="icon" />
