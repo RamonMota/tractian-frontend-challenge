@@ -33,6 +33,13 @@ html {
   -ms-touch-action: pan-x pan-y;
 }
 
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 ::selection {
 
   background: var(--color-blue);
@@ -45,7 +52,7 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: .5s ease-in-out;
+  transition: .3s ease-in-out;
 
 }
 
@@ -94,6 +101,7 @@ body {
 .w-100 {
   width: 100%;
 }
+
 .justify-content-end {
   justify-content: flex-end !important;
 }
@@ -127,9 +135,14 @@ body {
   margin-top: var(--space-md);
 }
 
+.pl-sm {
+  padding-left: var(--space-sm);
+}
+
 .p-sm {
   padding: var(--space-sm);
 }
+
 .pb-xs {
   padding-bottom: var(--space-xs);
 }
@@ -190,5 +203,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: calc(var(--space-sm) + 2px);
+    position: relative;
+  }
+}
+
+@keyframes loadingSkeleton {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
   }
 }

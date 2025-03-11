@@ -6,21 +6,22 @@ export type Company = {
 };
 
 export type CompanyLocation = {
-  id: number;
+  id: string;
   name: string;
   parentId: number | string;
+  children?: CompanyLocation[];
 };
 
 export type Asset = {
-  id: string;
-  name: string;
-  companyId: string;
-  locationId: string;
-  gatewayId: string;
-  parentId: string | null;
-  sensorId: string | null;
-  sensorType: string | null;
-  status: string | null;
+  id?: string;
+  name?: string;
+  parentId?: string | null;
+  sensorId?: string | null;
+  sensorType?: string | null;
+  status?: string | null;
+  gatewayId?: string;
+  locationId?: string;
+  children?: Asset[]
 };
 
 export const getCompanies = async (): Promise<Company[]> => {

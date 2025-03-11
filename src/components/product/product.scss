@@ -19,10 +19,22 @@
     gap: var(--space-xl);
 
     .img-description {
-        width: 336px;
+        min-width: 336px;
         height: 226px;
         border: 1px solid var(--color-gray-border);
         border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 2px;
+        background: #F2F8FF;
+        border: 1px dashed var(--color-blue);
+
+        p {
+            font-size: 14px;
+            color: var(--color-blue)
+        }
     }
 }
 

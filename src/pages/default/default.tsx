@@ -26,13 +26,10 @@ export const Default = () => {
         </div>
         <div className='d-flex gap-xs height-in'>
           <div className='content-column left-column'>
-            <Search />
-            <div className='p-sm'>
-              <ListItems />
-            </div>
+            <ListItems />
           </div>
           <div className='content-column right-column'>
-            <Product/>
+            <Product />
           </div>
         </div>
       </div>

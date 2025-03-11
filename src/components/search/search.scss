@@ -6,6 +6,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 4px calc(var(--space-sm) + 2px);
+    top: 0;
+    background: var(--color-white);
+    position: sticky;
 
     input {
         border: none !important;

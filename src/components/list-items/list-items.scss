@@ -1,0 +1,82 @@
+.content-scroll {
+    
+}
+
+.content-list-items {
+    // overflow: scroll;
+    height: 100%;
+    padding: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    p {
+        white-space: nowrap;
+    }
+
+    .content-item-children {
+        padding: 0 0 0 var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+    }
+
+    .content-item {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px 8px;
+        border-radius: 2px;
+        cursor: pointer;
+
+        svg {
+            min-width: 10px;
+        }
+
+        svg path {
+            fill: var(--color-dark);
+        }
+
+        p {
+            color: var(--color-dark);
+        }
+
+        img {
+            max-width: 22px;
+            max-height: 22px;
+        }
+
+        &:hover {
+            background: #F2F8FF;
+
+            svg path {
+                fill: var(--color-blue);
+            }
+
+            p {
+                color: var(--color-blue);
+            }
+        }
+
+        .rotate-open {
+            rotate: 180deg;
+        }
+
+    }
+
+    .content-item-collapse {
+        padding: 5px 0 5px 17px;
+    }
+}
+
+.skelleton-list {
+    width: 100%;
+    min-height: 25px;
+    height: 30px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #F2F8FF 25%, #fafcff 50%, #F2F8FF 75%);
+    background-size: 200% 100%;
+    animation: loadingSkeleton 2s infinite ease-in-out;
+}
+
