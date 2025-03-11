@@ -1,12 +1,10 @@
 import { Header } from '../../components/header/header'
-import { Search } from '../../components/search/search'
-import IconBolt from '../../assets/Icon-bolt.svg'
-import IconI from '../../assets/Icon-i.svg'
-import './default.scss'
 import { ListItems } from '../../components/list-items/list-items'
 import { Product } from '../../components/product/product'
 import { useCompany } from '../../context/companyContext'
 import { useFilterAssetContext } from '../../context/FilterAssetContext'
+import { FilterItens } from '../../enum/enum'
+import './default.scss'
 
 export const Default = () => {
 
@@ -21,8 +19,6 @@ export const Default = () => {
     }
   }
 
-  console.log(filter)
-
   return (
     <div className='content-page'>
       <Header />
@@ -31,8 +27,8 @@ export const Default = () => {
           <h2 className='content-breadcrumb'><b>Ativos</b> / {company?.name} Unit</h2>
           <div className='d-flex align-items-center gap-xs'>
             <button
-              onClick={() => handleChangeFilter('energy')}
-              className={`btn-outline ${filter === 'energy' ? 'selected' : ''}`}
+              onClick={() => handleChangeFilter(FilterItens.ENERGY)}
+              className={`btn-outline ${filter === FilterItens.ENERGY ? 'selected' : ''}`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M13.9999 5.27216H10.0659L13.6034 0.802516C13.6767 0.707874 13.6106 0.570374 13.4909 0.570374H6.64273C6.59273 0.570374 6.54451 0.597159 6.51951 0.641802L1.89273 8.63287C1.83737 8.72752 1.90523 8.84716 2.01594 8.84716H5.13023L3.5338 15.2329C3.49987 15.3722 3.66773 15.4704 3.7713 15.3704L14.0981 5.5168C14.1909 5.4293 14.1284 5.27216 13.9999 5.27216ZM5.61059 11.9364L6.68737 7.63287H3.87666L7.26237 1.78645H11.2731L7.55344 6.48823H11.3213L5.61059 11.9364Z" />
@@ -40,8 +36,8 @@ export const Default = () => {
               Sensor de Energia
             </button>
             <button
-              onClick={() => handleChangeFilter('critical')}
-              className={`btn-outline ${filter === 'critical' ? 'selected' : ''}`}
+              onClick={() => handleChangeFilter(FilterItens.ALERT)}
+              className={`btn-outline ${filter === FilterItens.ALERT ? 'selected' : ''}`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 1C4.13437 1 1 4.13437 1 8C1 11.8656 4.13437 15 8 15C11.8656 15 15 11.8656 15 8C15 4.13437 11.8656 1 8 1ZM8 13.8125C4.79063 13.8125 2.1875 11.2094 2.1875 8C2.1875 4.79063 4.79063 2.1875 8 2.1875C11.2094 2.1875 13.8125 4.79063 13.8125 8C13.8125 11.2094 11.2094 13.8125 8 13.8125Z" />

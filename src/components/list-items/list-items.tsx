@@ -14,8 +14,9 @@ import { mergeLocationAssets, refactorAsset, refactorLocations } from '../../ser
 import { Search } from '../search/search';
 import { searchInHierarchy } from '../../utils/search-in-hierarchy';
 import { useCompany } from '../../context/companyContext';
-import { filterEnergySensors } from '../../utils/filter-energy-sensors';
 import { useFilterAssetContext } from '../../context/FilterAssetContext';
+import { FilterItens } from '../../enum/enum';
+import { filterCriticalStatus, filterEnergySensors } from '../../utils/filter-sensor-status';
 
 interface IOpenCollapseItems {
     [key: string]: boolean;
@@ -33,27 +34,45 @@ export const ListItems = () => {
     const refactoredLocations = refactorLocations(locations);
     const refactoredAsset = refactorAsset(asset);
     const combinedArray = [...refactoredLocations, ...refactoredAsset]
+    const [filterSensorCritutal, setFilterSensorCritutal] = useState<Asset[]>()
     const assetWithLocation = mergeLocationAssets(combinedArray);
-    const assetsEnegySensors = filterEnergySensors(combinedArray);
     const [openItems, setOpenItems] = useState<IOpenCollapseItems>({});
     const [search, setSearch] = useState<string>()
 
     useEffect(() => {
-        if (filter === '') {
-            setOpenItems({});
-        } else if (filter === 'energy') {
-            const filtered = filterEnergySensors(assetWithLocation);
-            handleOpenItensSearch(filtered)
-            setResultSearch(filtered);
+        switch (filter) {
+            case '':
+                setOpenItems({});
+                setFilterSensorCritutal([]);
+                return;
+
+            case FilterItens.ENERGY: {
+                const filtered = filterEnergySensors(assetWithLocation);
+                setFilterSensorCritutal(filtered);
+                handleOpenItensSearch(filtered);
+                setResultSearch(filtered);
+                return;
+            }
+
+            case FilterItens.ALERT: {
+                const filtered = filterCriticalStatus(assetWithLocation);
+                setFilterSensorCritutal(filtered);
+                handleOpenItensSearch(filtered);
+                setResultSearch(filtered);
+                return;
+            }
+
+            default:
+                return;
         }
-    }, [filter, company]);
+    }, [filter]);
 
     useEffect(() => {
         if (search === '') {
             setOpenItems({});
         } else if (search) {
             const filtered = searchInHierarchy(assetWithLocation, search);
-            
+
             setFilter('')
             handleOpenItensSearch(filtered)
             setResultSearch(filtered);
@@ -90,12 +109,30 @@ export const ListItems = () => {
         else return locationIcon
     }
 
+    const handleOpenItensSearch = (itemList: Asset[]) => {
+        const newOpenItems: IOpenCollapseItems = {};
+
+        const markOpenItems = (items: Asset[]) => {
+            items.forEach(item => {
+                if (item.id && item.children?.length) {
+                    newOpenItems[item.id] = true;
+                    markOpenItems(item.children);
+                }
+            });
+        };
+
+        markOpenItems(itemList);
+        setOpenItems(newOpenItems);
+    }
+
     const handleCorrecStatusIcon = (item: Asset) => {
-        if (item.sensorType === "energy") {
+        if (item.sensorType === "energy" && item.status === "operating") {
             return boltIcon
-        } else if (item.sensorType === "vibration" && item.status === "alert") {
+        }
+        if (item.status === "alert") {
             return ellipseRedIcon
-        } else if (item.sensorType === "vibration" && item.status === "operating") {
+        }
+        if (item.status === "operating") {
             return ellipseGreenIcon
         }
     }
@@ -132,27 +169,11 @@ export const ListItems = () => {
         );
     };
 
-    const handleOpenItensSearch = (itemList: Asset[]) => {
-        const newOpenItems: IOpenCollapseItems = {};
-
-        const markOpenItems = (items: Asset[]) => {
-            items.forEach(item => {
-                if (item.id && item.children?.length) {
-                    newOpenItems[item.id] = true;
-                    markOpenItems(item.children);
-                }
-            });
-        };
-
-        markOpenItems(itemList);
-        setOpenItems(newOpenItems);
-    }
-
     const renderResults = () => {
         if (loading) return [...Array(15)].map((_, i) => <div className='skelleton-list' key={i} />);
 
-        if (filter === 'energy' && assetsEnegySensors) {
-            return sortedRenderResults(assetsEnegySensors).map(renderListItems)
+        if ((filter === FilterItens.ENERGY || filter === FilterItens.ALERT) && filterSensorCritutal) {
+            return sortedRenderResults(filterSensorCritutal).map(renderListItems)
         }
 
         if (search) {
