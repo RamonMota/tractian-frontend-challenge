@@ -1,16 +1,16 @@
-## Visão Geral
+## Overview
 
-Este projeto foi desenvolvido utilizando React como framework principal. Para o gerenciamento global de estados, foi utilizado o Context API, permitindo a centralização de informações relacionadas a buscas e filtros, o que melhora a organização e facilita a manutenção do código.
+This project was developed using React as the main framework. For global state management, Context API was used, allowing the centralization of information related to searches and filters, which improves organization and facilitates code maintenance.
 
-Além disso, a biblioteca Axios foi utilizada para realizar requisições à API, garantindo uma comunicação eficiente e flexível com os serviços externos.
+Additionally, the Axios library was used to handle API requests, ensuring efficient and flexible communication with external services.
 
-## Vídeo de Demonstração
+## Preview
 https://github.com/user-attachments/assets/85ba91e6-e3e5-43b9-abb2-b07f2d55cc6c
 
-## O que precisa melhorar ?
-### Caso houvesse mais tempo, os seguintes aspectos poderiam ser aprimorados:
-- Gerenciamento de Ícones: Implementação de uma biblioteca para melhor controle e personalização dos ícones utilizados na aplicação.
-- Melhoria na Exibição de Ícones: Permitir que a listagem de Assets exiba múltiplos ícones simultaneamente quando determinadas condições forem atendidas, como quando o sensorType for "energy" e o status for "alert".
+## Areas for Improvement
+### If more time were available, the following aspects could be improved:
+- Icon Management: Implementing a library for better control and customization of the icons used in the application.
+- Improved Icon Display: Allowing the Assets list to display multiple icons simultaneously when specific conditions are met, such as when sensorType is "energy" and status is "alert".
 
-### Iniciar projeto
+### Start Project
 - npm run dev
